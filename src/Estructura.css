@@ -1,0 +1,66 @@
+html,
+body {
+    height: 100%;
+}
+
+header {
+    display: block;
+    background: url(../src/imagenes/fondoAzul.png) no-repeat center fixed;
+    background-size: cover;
+    padding: 13px 0px;
+    color: whitesmoke;
+    height: 30%;
+}
+
+h1 {
+    text-indent: 10px;
+}
+
+h2 {
+    text-align: center;
+}
+
+bottom-aligned {
+    display: flex;
+    align-items: flex-end;
+}
+
+section {
+    width: 100%;
+    height: 600px;
+    background: whitesmoke;
+    float: left;
+    overflow: auto;
+    padding-bottom: 30px;
+    padding-top: 50px;
+}
+
+aside {
+    float: right;
+    border: 1px solid red;
+    width: 19%;
+    border: 1px solid red;
+    /*Si quisieramos ocultar el contenido relacionado pondriamos visibility a hidden*/
+    /*visibility: hidden;*/
+}
+
+footer {
+    position: relative;
+    margin-top: 50px;
+    height: 40px;
+    padding: 15px 0px;
+    clear: both;
+    background: url(../src/imagenes/fondoAzul.png) no-repeat center fixed;
+    background-size: cover;
+    text-align: center;
+    color: #fff;
+}
+
+figure {
+    display: table;
+    margin: 0 auto;
+}
+
+img {
+    float: left;
+}

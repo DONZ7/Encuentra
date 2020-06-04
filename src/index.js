@@ -2,15 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import Principal from './paginas/Principal';
+import Agregar from './paginas/Agregar';
+import Formulario from './paginas/Formulario'
 
-ReactDOM.render( <
-    React.StrictMode >
-    <
-    App / >
-    <
-    /React.StrictMode>,
+import Detalle from './paginas/Detalle';
+import Modalx from './paginas/Modal'
+import Editar from './paginas/Editar'
+
+
+import Estructura from './paginas/Estructura';
+
+import * as serviceWorker from './serviceWorker';
+import { Modal } from 'reactstrap';
+
+ReactDOM.render( < Modalx / > ,
     document.getElementById('root')
 );
 
