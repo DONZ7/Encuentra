@@ -39,9 +39,9 @@ function Modalx() {
         <
         label > Latitud:
         <
-        imput type = "text"
+        input type = "text"
         className = "form-control"
-        placeholder = "Latitu"
+        placeholder = "Latitud"
         name = "Latitud" / >
         <
         /label >  < /
@@ -54,9 +54,10 @@ function Modalx() {
         <
         label > Longitud:
         <
-        imput type = "text"
+        input type = "text"
         className = "form-control"
-        placeholder = "Longitud" / >
+        placeholder = "Longitud" 
+        name = "Longitud"/ >
         <
         /
         label >

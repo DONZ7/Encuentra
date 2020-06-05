@@ -10,7 +10,7 @@ const Formulario = () => ( <
     <
     label > Nombre:
     <
-    imput type = "text"
+    input type = "text"
     className = "form-control"
     placeholder = "Nombre"
     name = "nombre" / >
@@ -19,7 +19,7 @@ const Formulario = () => ( <
     div >
 
     <
-    div className = "form-group " >
+    div className = "form-group form-inline" >
     <
     label > Disponibilidad:
 
@@ -65,9 +65,9 @@ const Formulario = () => ( <
     <
     label > Radio de disponibilidad:
     <
-    imput type = "text"
+    input type = "text"
     className = "form-control"
-    placeholder = "Nombre" / >
+    placeholder = "Radio de disponibilidad" / >
     <
     /
     label >
@@ -77,9 +77,9 @@ const Formulario = () => ( <
     <
     label > Puntos de referencia:
     <
-    imput type = "text"
+    input type = "text"
     className = "form-control"
-    placeholder = "Nombre" / >
+    placeholder = "Puntos de referencia" / >
     <
     /label> < /
     div >
@@ -88,9 +88,9 @@ const Formulario = () => ( <
     div className = "form-group form-inline" >
     <
     label > Tipo: <
-    imput type = "text"
+    input type = "text"
     className = "form-control"
-    placeholder = "Nombre" / >
+    placeholder = "Tipo" / >
 
     <
     /label>
@@ -103,10 +103,9 @@ const Formulario = () => ( <
 
 
     <
-    button type = "submit"
-    value = "submit"
-    className = "btn btn-danger" > Agregar <
-    /button>
+    input type = "submit"
+    value = "Agregar"
+    className = "btn btn-danger" / >
 
 
 

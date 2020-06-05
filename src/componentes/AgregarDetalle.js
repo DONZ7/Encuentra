@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react'
-const Editar = () => ( <
+const AgregarDetalle = () => ( <
     div className = "container" >
 
     <
@@ -12,9 +12,9 @@ const Editar = () => ( <
     <
     label > Latitud:
     <
-    imput type = "text"
+    input type = "text"
     className = "form-control"
-    placeholder = "Latitu"
+    placeholder = "Latitud"
     name = "Latitud" / >
     <
     /label >  < /
@@ -27,7 +27,7 @@ const Editar = () => ( <
     <
     label > Longitud:
     <
-    imput type = "text"
+    input type = "text"
     className = "form-control"
     placeholder = "Longitud" / >
     <
@@ -38,10 +38,9 @@ const Editar = () => ( <
 
 
     <
-    button type = "submit"
-    value = "submit"
-    className = "btn btn-danger" > Agregar <
-    /button>
+    input type = "submit"
+    value = "Agregar"
+    className = "btn btn-danger" / >
 
 
 
@@ -57,4 +56,4 @@ const Editar = () => ( <
 )
 
 
-export default Editar
+export default AgregarDetalle

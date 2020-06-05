@@ -3,6 +3,7 @@
                 background-repeat: no-repeat;
                 height: 700px;
                 position: relative;
+                background-size: 1470px 700px;
             }
             
             .PosicionMapa {
@@ -29,5 +30,5 @@
             .boton-iniciar {
                 position: absolute;
                 top: 70%;
-                left: 30%;
+                left: 25%;
             }
