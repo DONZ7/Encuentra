@@ -5,7 +5,7 @@ import Modal from 'react-modal'
 
 
 function Modalx() {
-    const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(true)
 
     return ( <
         div >
@@ -18,7 +18,7 @@ function Modalx() {
         <
         div className = "w-auto p-3" >
         <
-        Modal dialog centered className = "container"
+        Modal className = "modal-dialog"
         isOpen = { modalIsOpen }
         shouldCloseOnOverlayClick = { false }
         onRequestClose = {
@@ -29,8 +29,7 @@ function Modalx() {
         <
         div className = "modal-title" > Agregar < /div> < /
         div > <
-        div className = "modal-body" > <
-        div >
+        div className = "modal-body" > 
         <
         form >
 
@@ -68,7 +67,9 @@ function Modalx() {
         <
         button type = "submit"
         value = "submit"
-        className = "btn btn-danger" > Agregar <
+        className = "btn btn-danger" 
+    
+        > Agregar <
         /button>
 
 
@@ -79,7 +80,7 @@ function Modalx() {
 
 
         <
-        /div > < /div >
+        /div > 
         <
         /Modal >  < /
         div > < /

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Registro from '../componentes/Registro'
 import mapa from '../imagenes/mapa.png';
 import  {useState} from 'react'
 import '../estilos/principal.css';
@@ -21,13 +22,14 @@ const Principal = () =>{
     h1 >
     Encuentra <
     /h1> <
-    h2 > Tu lugar favorito < /h2></div >
-
+    h2 > Tu lugar favorito < /h2>
+    <Registro/> </div >
+    
     <
     img src = { mapa }
     class = "PosicionMapa" /
     >
-
+   
     <Link  to="/Menu" >
     <
     button 

@@ -4,12 +4,17 @@ import Principal from './pagina/Principal'
 import Estructura from './pagina/Estructura'
 import Detalle from './componentes/Detalle'
 import Modalx from './componentes/Modal'
-
 import { BrowserRouter , Route, Switch,Link } from 'react-router-dom'
 
+import 'firebase/firestore';
+import { useFirebaseApp } from 'reactfire';
 
-const App = () => (
-
+const App = () => {
+const firebase=useFirebaseApp();
+ console.log(firebase);
+  
+ 
+return(
     <
     BrowserRouter >
 
@@ -22,6 +27,6 @@ const App = () => (
     <
     /BrowserRouter>
 
-)
-
+);
+}
 export default App

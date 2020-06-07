@@ -1,16 +1,20 @@
-import React from 'react';
+import React,{ Suspense } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
 import App from './App'
-
 import * as serviceWorker from './serviceWorker';
 import { Modal } from 'reactstrap';
 
-ReactDOM.render( < App /
-    >
+import firebase from './firebase'
+import { FirebaseAppProvider}  from 'reactfire';
+
+ReactDOM.render(  
+    < FirebaseAppProvider firebaseConf={ firebase }>
+   <Suspense Suspense fallback={'conectando...'}>
+    < App />
+    </Suspense >
+    < /FirebaseAppProvider >
     ,
     document.getElementById('root')
 );
