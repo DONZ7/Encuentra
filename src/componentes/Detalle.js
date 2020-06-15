@@ -29,9 +29,11 @@ const Detalle = () => ( <
 
     < TablaDetalle/>
 
-   
+    <
+    button class = "btn btn-danger btn-lg text-center" >
+    Cargar mas < /button> 
     < /div>
-
+  
     <
     /
     section >
@@ -39,9 +41,7 @@ const Detalle = () => ( <
 
     <
     footer >
-    <
-    button class = "btn btn-danger btn-lg text-center" >
-    Cargar mas < /button>  <
+     <
     /footer>
 
 

@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { BrowserRouter , Route, Switch,Link} from 'react-router-dom'
 
 const TablaDetalle=()=>(
     < div className="container ol-md-12 text-center">
@@ -42,6 +42,8 @@ const TablaDetalle=()=>(
     table >
 
     < /div>
+
+   
 )
 
 export default TablaDetalle

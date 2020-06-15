@@ -1,8 +1,11 @@
 import React from 'react'
 import { BrowserRouter , Route, Switch,Link } from 'react-router-dom'
 
-const Buscador = () => (
+const Buscador = () => { 
 
+
+
+    return(
     <
     div className = "container" >
     <
@@ -28,7 +31,7 @@ const Buscador = () => (
     <
     button class = "btn btn-outline-success my-2 my-sm-0 "
     type = "button" > Limpiar < /button> 
-    <Link  to="/Modal" >
+    <Link  to="/Formulario" >
     <
     button class = "btn btn-danger my-2 my-sm-0 ml-4 "
     type = "button" > Anadir < /button> 
@@ -51,6 +54,7 @@ const Buscador = () => (
 
 
 
-)
+    )
+};
 
 export default Buscador

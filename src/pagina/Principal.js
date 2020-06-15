@@ -5,13 +5,23 @@ import mapa from '../imagenes/mapa.png';
 import  {useState} from 'react'
 import '../estilos/principal.css';
 import { BrowserRouter , Route, Switch,Link} from 'react-router-dom'
+import {useFirebaseApp} from 'reactfire'
+import 'firebase/auth';
 
-const Principal = () =>{ 
-    const [InicioSesion, setInicioSesion] = useState('Inicio Sesion');
+const Principal = ({email,password,submit} ) =>{ 
+   // const [email, setEmail] = useState('');
+    //const [password, setPassword] = useState('');
+    const [InicioSesion, setInicioSesion] = useState('Inicio');
+    
+//const firebase=useFirebaseApp();
 
-    const handleClick= () => {
-        alert('Para más información, acuda a recepción.');
-  }
+    //const submit= () => {
+      //  console.log(email,password);
+       // await firebase.auth().createUserWithEmailAndPassword(email,password)
+       
+
+
+//}
  return(
 
 
@@ -35,15 +45,14 @@ const Principal = () =>{
     button 
     type = "button "
     class = "btn btn-danger boton-registrar" 
+    onClick={submit}
     >
     {InicioSesion}
     < /button> </Link>
 
-    <
-    button type = "button"
-    class = "btn btn-primary boton-iniciar" > Registrarse < /button > < /
+     < /
     div >
-)
+);
 }
 
 export default Principal

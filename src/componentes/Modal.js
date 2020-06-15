@@ -5,7 +5,7 @@ import Modal from 'react-modal'
 
 
 function Modalx() {
-    const [modalIsOpen, setModalIsOpen] = useState(true)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
 
     return ( <
         div >

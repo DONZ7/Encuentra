@@ -30,5 +30,11 @@
             .boton-iniciar {
                 position: absolute;
                 top: 70%;
-                left: 25%;
+                left: 100%;
+            }
+
+            .registrar {
+                position: absolute;
+                top: 200%;
+                left: 100%;
             }

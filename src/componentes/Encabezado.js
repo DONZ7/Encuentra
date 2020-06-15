@@ -2,10 +2,13 @@ import React from 'react'
 import '../Estructura.css';
 import mapa from '../imagenes/mapa.png';
 import { BrowserRouter , Route, Switch,Link} from 'react-router-dom'
+import {useUser} from 'reactfire'
 
+import Registro from './Registro'
 
-const Encabezado=()=>(
-
+const Encabezado=({Registro})=>{
+const user=useUser();
+    return(
 <
 div class = "container-fluid" >
 <
@@ -32,7 +35,7 @@ Cerrar Sesion < /button> </Link>   <br ></br > <Link to="/Menu" ><
 button class = "btn btn-success btn-lg m-2 " >
 Menu < /button> </Link><br ></br >
 <
-h3 > dzambranoz7 @gmail.com < /h3 > < /
+h3 >{user.email} < /h3 > < /
 div >
 <
 /
@@ -40,6 +43,6 @@ div >
 <
 /
 div >
-)
-
+);
+}
 export default Encabezado

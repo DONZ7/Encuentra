@@ -1,5 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react'
+import { BrowserRouter , Route, Switch,Link} from 'react-router-dom'
+
 const AgregarDetalle = () => ( <
     div className = "container" >
 
