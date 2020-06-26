@@ -5,8 +5,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App'
 import * as serviceWorker from './serviceWorker';
 import { Modal } from 'reactstrap';
-
-
 import firebase from './firebase'
 import { FirebaseAppProvider}  from 'reactfire';
 

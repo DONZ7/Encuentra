@@ -13,25 +13,20 @@ import { useFirebaseApp } from 'reactfire';
 
 const App = () => {
 const firebase=useFirebaseApp();
- console.log(firebase);
-  
  
 return(
-    <
-    BrowserRouter >
+    <BrowserRouter >
 
           <Route exact path="/Menu" component={Estructura}/>
-          <Route exact path="/Inicio" component={Principal}/>
+          <Route exact path="/" component={Principal}/>
           <Route exact path="/Detalle" component={Detalle}/>
           <Route exact path="/Formulario" component={Formulario}/>
           <Route exact path="/Modal" component={Modalx}/>
           <Route exact path="/AgregarDetalle" component={AgregarDetalle}/>
    
-    
-
-    <
-    /BrowserRouter>
+    </BrowserRouter>
 
 );
 }
+
 export default App

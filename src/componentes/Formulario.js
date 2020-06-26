@@ -1,68 +1,85 @@
 import React,{ useState, useEffect } from 'react'
 import { BrowserRouter , Route, Switch,Link} from 'react-router-dom'
 import { Modal ,ModalHeader, ModalBody ,FormGroup ,ModalFooter }  from  "reactstrap" ;
-
-import ReactDOM from 'react'
-import Encabezado from '../componentes/Encabezado'
-import Buscador from '../componentes/Buscador'
-import TablaDetalle from '../componentes/TablaDetalle'
-
 import axios from 'axios';
 
 const Formulario = () => { 
-    const [Nombre, setNombre] = useState('');
-    const [Disponibilidad, setDisponibilidad] = useState('');
-    const [Radio, setRadio] = useState('');
-    const [Puntos, setPuntos] = useState('');
-    const [Tipos, setTipos] = useState('');
-    var [dato, setdato] = useState([ ]);
+    
     var [tabla, settabla] = useState([ ]);
-
     
     const [modalAbrir, setModalAbrir] = useState(false);
-    const [modalCerrar, setModalCerrar] = useState(false);
+    const [modalEditarAbrir, setModalEditarAbrir] = useState(false);
+    const [ informacion , setInformacion ] = useState ([ ]); 
+    var [informacionEditar, setinformacionEditar] = useState([ ]);
 
-//obtener datos de  la base de datos
-    useEffect(() =>{
-      axios.get('https://us-central1-encuentra-e2a48.cloudfunctions.net/verlugares')
-      .then(res=>{settabla(res.data);})
-    })
-
-    //insertar
-
-    const informacion = {
-      nombre:Nombre,
-      disponibilidad:'Disponibilidad',
-      radio: Radio,
-      puntos:Puntos,
-      tipo: Tipos };
-
-
-const  handleChange=(e) =>{ console.log('prueba')
-  }
-
-
-    //insertar datos en la base de datos 
-    const insertarDatos= (e) =>{
-      
-      dato.push(informacion);
-       axios.post('https://us-central1-encuentra-e2a48.cloudfunctions.net/lugares',dato )
-       .then(re=>{
-  
-          console.log(dato);
-    }).catch(e => {
-      console.log('tabla');
-  });
+    //insertar datos del formulario 
+    const getData = async(  ) =>{  
+     let getdata=await  axios.get('https://us-central1-encuentra-e2a48.cloudfunctions.net/getLugares')
+    if(getdata.data.success){
+      settabla(getdata.data.data)
     }
-     
+    console.log(getdata.data.data)
+    }
+//obtener datos de  la base de datos
+    useEffect(() =>{getData()}, [ ])
 
-//enviar datos del formulario a firebase
-    const submit=async(e) =>{
-     e.preventDefault();  
-     insertarDatos();
-    
-     
-  };
+
+//insertar datos del formulario 
+  const insertarDatos = ( e ) =>{  
+    setInformacion ({ 
+      ... informacion , 
+      [ e .target.name]:  e .target.value
+    })
+  
+  }
+//enviar datos a firebase  peticiones a las funciones 
+const EnviarDatos= () =>{  
+console.log(informacion);
+   axios.post('https://us-central1-encuentra-e2a48.cloudfunctions.net/postLugares',{informacion} )
+   .then(re=>{
+    console.log('informacion enviado con exito');
+    }).catch(e => {
+      console.log('error de envio');
+  });
+}
+
+//eliminar datos
+const eliminarDato=async(id)=>{
+  console.log({id} )
+  let deleteData=await axios.post('https://us-central1-encuentra-e2a48.cloudfunctions.net/deleteLugares',{id} )
+  .then(re=>{
+    console.log('informacion eliminadoo con exito');
+    }).catch(e => {
+      console.log('error');
+  });
+
+}
+
+//actualizar datos editar 
+const EditarDatos=async(id,nomb,radi,punt,tip)=>{
+  setInformacion ( {
+    id: id,
+      nombre: nomb,
+      disponibilidad:'',
+      radio: radi,
+      puntos: punt,
+      tipo: tip 
+  })
+  console.log(informacion);
+ 
+}
+//editar datos
+const editar=async()=>{
+  
+  let editardata=await axios.post('https://us-central1-encuentra-e2a48.cloudfunctions.net/updateLugares',{informacion} )
+  .then(re=>{
+    console.log('informacion editada con exito');
+    }).catch(e => {
+      console.log('error');
+  });
+
+}
+
 
 
 
@@ -72,15 +89,30 @@ const mostrartModal=() =>{
    setModalAbrir(true);
 }
 
+//cerrar modal
 const ocultartModal=() =>{
   setModalAbrir(false);
 }
 
+
+
+// abrir modal editar
+
+const mostrartModalEditar=(informacion) =>{
+  setModalEditarAbrir(true);
+}
+
+//cerrar modal editar
+const ocultartModalEditar=() =>{
+ setModalEditarAbrir(false);
+}
+
+
     return(                                     
       <div>
-                <button class="btn align-content-center btn-danger"  onClick={() =>mostrartModal()}> Añadir</button>
+               
                 <br></br>
-                <h2 > Visualizar lugares </h2> 
+                <h2 >Visualizar lugares  <button class="btn align-content-center btn-danger"  onClick={() =>mostrartModal()}> Añadir</button></h2> 
                 <div className="container" >
                 < table className = "table table-striped table-bordered table-condensed" >
                   < thead className = "thead-dark" >
@@ -96,17 +128,19 @@ const ocultartModal=() =>{
                   </thead> 
                   <tbody >
                   { tabla.map((elemento,index)=>(
-                    <tr  >
+                    <tr key={index}>
                       <th >{elemento.nombre}</th> 
-                        <td >{elemento.disponibilidad}</td> 
+                        <td >{elemento.id}</td> 
                         <td > {elemento.radio}</td>
                         <td > {elemento.puntos}</td>
                         <td > {elemento.tipo}</td> 
                         <td >
 
                           <div class = "btn-group" >
-                            <button type = "button"class = "btn btn-primary" > Editar </button> 
-                            <button type = "button"class = "btn btn-danger" > Eliminar </button>
+                            <button type = "button"class = "btn btn-primary" 
+                            onClick={() =>{mostrartModalEditar();
+                            EditarDatos(`${elemento.id}`,`${elemento.nombre}`,`${elemento.radio}`,`${elemento.puntos}`,`${elemento.tipo}`)}}> Editar </button> 
+                            <button type = "button"class = "btn btn-danger"onClick={() =>eliminarDato(`${elemento.id}`)} > eliminar </button>
                             <Link to="/Detalle"> <button type = "button"class = "btn btn-success" > Ver </button></Link>
                           </div >
 
@@ -117,109 +151,229 @@ const ocultartModal=() =>{
                   </tbody> 
                 </table >
                 </div >
-            
-            <Modal 
-            isOpen={modalAbrir}>
-                      <ModalHeader>
-                      <div><h3>Agregar Lugar</h3></div>
-                      </ModalHeader>
+  
 
-                      <ModalBody>
-                      <FormGroup>
-                      < div className = "form-group form-inline" >
-                        <label > Nombre:
-                          <input type = "text"
-                            className = "form-control"
-                            placeholder = "Nombre"
-                            name = "nombre" 
-                            onChange= {(event)=>setNombre(event.target.value)}/ >
-                        </label>  
-                      </div >
-                      </FormGroup>
 
-                      <FormGroup>
+                <Modal 
+                isOpen={modalAbrir}>
+                   <form > 
+                          <ModalHeader>
+                          <div className="container text-center"><h3>Agregar Lugar</h3></div>
+                          </ModalHeader>
+
+                          <ModalBody>
+                          <FormGroup >
+                          < div className = "form-group form-inline" >
+                            <label > Nombre:
+                              <input type = "text"
+                                className = "form-control"
+                                placeholder = "Nombre"
+                                name = "nombre" 
+                                value={informacion.nombre}
+                                onChange={insertarDatos}/ >
+                            </label>  
+                          </div >
+                         
+                        <div className = "form-group form-inline" >
+                          <label > Disponibilidad:
+                            <form >
+                              <div className = "radio" >
+                              <label >
+                                < input type = "radio"
+                                value = "option1"
+                                checked = { true }/>
+                                Disponible </label> 
+                              </div >
+                      
+                              <div className = "radio" >
+                                < label >
+                                  <input type = "radio"
+                                  value = "option2" / >
+                                  No disponible 
+                                </label> 
+                              </div >
+
+                            </form >
+                          </label >   
+                        </div >   
+                 
                     <div className = "form-group form-inline" >
-                      <label > Disponibilidad:
-                        <form >
-                          <div className = "radio" >
-                          <label >
-                            < input type = "radio"
-                            value = "option1"
-                            checked = { true }/>
-                            Disponible </label> 
-                          </div >
-                  
-                          <div className = "radio" >
-                            < label >
-                              <input type = "radio"
-                              value = "option2" / >
-                              No disponible 
-                            </label> 
-                          </div >
+                      <label > Radio de disponibilidad:
+                        <input type = "text"
+                        name = "radio" 
+                        className = "form-control"
+                        placeholder = "Radio de disponibilidad"
+                        onChange={insertarDatos}
+                        value={informacion.radio}
+                        / >
+                      </label >
+                    </div> 
+                   
+                    < div className = "form-group form-inline" >
+                      <label > Puntos de referencia:
+                        <input type = "text"
+                        name = "puntos" 
+                        className = "form-control"
+                        placeholder = "Puntos de referencia"
+                        onChange={insertarDatos}
+                        value={informacion.puntos}
+                        / >
+                      </label> 
+                      </div >
+                      
+                    <div className = "form-group form-inline" >
+                      <label > Tipo: 
+                        <  input type = "text"
+                          name = "tipo" 
+                          className = "form-control"
+                          placeholder = "Tipo"
+                          value={informacion.tipo}
+                          onChange={insertarDatos}/ >
+                    </label>
+                    </div>
+                    
+                    </FormGroup>     
+                            
+                    
+                          </ModalBody>
 
-                        </form >
-                      </label >   
-                    </div >   
-                </FormGroup> 
+                          <ModalFooter>
+                          <div className=" container text-center">
+                          <button className="btn btn-danger" 
+                            type="button"
+                            onClick={() =>{ocultartModal();
+                             }}
+                            >
+                              Cancelar
+                            </button>  {" "} 
+                            <button class = "btn btn-primary" 
+                            type="button"
+                            onClick={() =>{ocultartModal();
+                              EnviarDatos()}}
+                            >
+                              Aceptar
+                            </button>
+                          </div>
+                          </ModalFooter>
+                          </form >
+                </Modal>
             
-                <FormGroup>
-                <div className = "form-group form-inline" >
-                  <label > Radio de disponibilidad:
-                    <input type = "text"
-                    name = "radio" 
-                    className = "form-control"
-                    placeholder = "Radio de disponibilidad"
-                    onChange= {(event)=>setRadio(event.target.value) }/ >
-                  </label >
-                </div> 
-                </FormGroup>
 
-                <FormGroup>
-                < div className = "form-group form-inline" >
-                  <label > Puntos de referencia:
-                    <input type = "text"
-                    name = "puntos" 
-                    className = "form-control"
-                    placeholder = "Puntos de referencia" 
-                    onChange= {(event)=>setPuntos(event.target.value)}/ >
-                  </label> 
-                  </div >
-                  </FormGroup>
 
-                  <FormGroup>
-                <div className = "form-group form-inline" >
-                  <label > Tipo: 
-                    <  input type = "text"
-                      name = "tipo" 
-                      className = "form-control"
-                      placeholder = "Tipo" 
-                      onChange= {(event)=>setTipos(event.target.value)}/ >
-                </label>
-                </div>
-                </FormGroup>     
-                        
-                
-                      </ModalBody>
 
-                      <ModalFooter>
-                        <button
-                          class = "btn btn-danger" 
-                          type="button"
-                          onClick={() =>ocultartModal()}
-                        >
-                          Editar
-                        </button>
-                        <button class = "btn btn-danger" 
-                        type="button"
-                        onClick={() =>ocultartModal()}
-                        >
-                          Cancelar
-                        </button>
-                      </ModalFooter>
-             </Modal>
+
+
+
+
+
+            
+  
+                <Modal 
+                isOpen={modalEditarAbrir}>
+                   <form > 
+                          <ModalHeader>
+                          <div className="container text-center"><h3>Editar Lugar</h3></div>
+                          </ModalHeader>
+
+                          <ModalBody>
+                          <FormGroup //onSubmit={EnviarDatos} 
+                          >
+                          < div className = "form-group form-inline" >
+                            <label > Nombre:
+                              <input type = "text"
+                                className = "form-control"
+                                placeholder = "Nombre"
+                                name = "nombre" 
+                                value={informacion.nombre}
+                                onChange={insertarDatos}/ >
+                            </label>  
+                          </div >
+                         
+                        <div className = "form-group form-inline" >
+                          <label > Disponibilidad:
+                            <form >
+                              <div className = "radio" >
+                              <label >
+                                < input type = "radio"
+                                value = "option1"
+                                checked = { true }/>
+                                Disponible </label> 
+                              </div >
+                      
+                              <div className = "radio" >
+                                < label >
+                                  <input type = "radio"
+                                  value = "option2" / >
+                                  No disponible 
+                                </label> 
+                              </div >
+
+                            </form >
+                          </label >   
+                        </div >   
+                 
+                    <div className = "form-group form-inline" >
+                      <label > Radio de disponibilidad:
+                        <input type = "text"
+                        name = "radio" 
+                        className = "form-control"
+                        placeholder = "Radio de disponibilidad"
+                        value={informacion.radio}
+                        onChange={insertarDatos}/ >
+                      </label >
+                    </div> 
+                   
+                    < div className = "form-group form-inline" >
+                      <label > Puntos de referencia:
+                        <input type = "text"
+                        name = "puntos" 
+                        className = "form-control"
+                        placeholder = "Puntos de referencia" 
+                        value={informacion.puntos}
+                        onChange={insertarDatos}/ >
+                      </label> 
+                      </div >
+                      
+                    <div className = "form-group form-inline" >
+                      <label > Tipo: 
+                        <  input type = "text"
+                          name = "tipo" 
+                          className = "form-control"
+                          placeholder = "Tipo" 
+                          value={informacion.tipo}
+                          onChange={insertarDatos}/ >
+                    </label>
+                    </div>
+                    
+                    </FormGroup>     
+                            
+                    
+                          </ModalBody>
+
+                          <ModalFooter>
+                          <div className=" container text-center">
+                          <button className="btn btn-danger" 
+                            type="button"
+                            onClick={() =>{ocultartModalEditar();
+                             }}
+                            >
+                              Cancelar
+                            </button>  {" "} 
+                            <button class = "btn btn-primary" 
+                            type="button"
+                            onClick={() =>{ocultartModalEditar();
+                              editar();
+                             }}
+                            >
+                              Editar
+                            </button>
+                          </div>
+                          </ModalFooter>
+                          </form >
+                </Modal>
           </div>
 
           );}
-
+        
 
 export default Formulario
